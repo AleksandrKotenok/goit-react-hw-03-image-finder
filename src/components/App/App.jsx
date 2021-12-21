@@ -1,16 +1,19 @@
+import { Searchbar } from "../Searchbar/Searchbar";
+import { ImageGallery } from "../ImageGallery/ImageGallery";
+import React, { Component, Fragment } from "react";
 
-import './App.css';
+class App extends Component {
+  submit = () => {};
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-      </header>
-    </div>
-  );
+  render() {
+    return (
+      <Fragment>
+        <p>hello</p>
+        <Searchbar />
+        <ImageGallery />
+      </Fragment>
+    );
+  }
 }
 
 export default App;
