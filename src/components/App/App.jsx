@@ -1,19 +1,79 @@
-import { Searchbar } from "../Searchbar/Searchbar";
+import api from "../../service/api";
+import Searchbar from "../Searchbar/Searchbar";
 import { ImageGallery } from "../ImageGallery/ImageGallery";
+import { Button } from "../Button/Button";
+import { Spinner } from "../Loader/Loader";
 import React, { Component, Fragment } from "react";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
-class App extends Component {
-  submit = () => {};
+export default class App extends Component {
+  state = {
+    search: "",
+    page: 1,
+    images: [],
+    loader: false,
+    //modal: false,
+    //modalImages: "",
+  };
+  componentDidUpdate(prevProps, { search, page }) {
+    if (search !== this.state.search || page !== this.state.page) {
+      this.apiData();
+    }
+    if (this.state.page !== 1) {
+      this.scroll();
+    }
+  }
+  apiData = async () => {
+    this.loader();
+    try {
+      const data = await api(this.state.search, this.state.page);
+      this.setState(({ images }) => {
+        return { images: [...images, ...data.hits] };
+      });
+    } catch (event) {
+      console.error(event);
+    } finally {
+      this.loader();
+    }
+  };
+  loader = () => {
+    this.setState(({ loader }) => ({ loader: !loader }));
+  };
+  scroll = () => {
+    window.scrollTo({
+      top: document.documentElement.scrollHeight,
+      behavior: "smooth",
+    });
+  };
+
+  modalData = (checkedId) => {
+    const image = this.state.images.find(({ id }) => id === checkedId);
+    this.setState({ modalImages: image.largeImageURL });
+  };
+
+  changeQuery = (query) => {
+    this.setState({
+      search: query,
+      page: 1,
+      images: [],
+    });
+  };
+  more = () => {
+    this.setState((prevState) => ({
+      page: prevState.page + 1,
+    }));
+  };
 
   render() {
+    const { images, page, loader } = this.state;
+    const enable = images.length > 0 && images.length / page === 12;
     return (
       <Fragment>
-        <p>hello</p>
-        <Searchbar />
-        <ImageGallery />
+        <Searchbar onSubmit={this.changeQuery} />
+        <ImageGallery image={images} onClick={this.modalData} />
+        {loader && <Spinner />}
+        {enable && <Button onClick={this.more} />}
       </Fragment>
     );
   }
 }
-
-export default App;
