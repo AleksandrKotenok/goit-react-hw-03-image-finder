@@ -4,7 +4,6 @@ import { ImageGallery } from "../ImageGallery/ImageGallery";
 import { Button } from "../Button/Button";
 import { Spinner } from "../Loader/Loader";
 import React, { Component, Fragment } from "react";
-import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 export default class App extends Component {
   state = {
@@ -12,8 +11,6 @@ export default class App extends Component {
     page: 1,
     images: [],
     loader: false,
-    //modal: false,
-    //modalImages: "",
   };
   componentDidUpdate(prevProps, { search, page }) {
     if (search !== this.state.search || page !== this.state.page) {

@@ -10,7 +10,6 @@ axios.defaults.params = {
 };
 
 const Api = async (search, page) => {
-  console.log('запрос',search,'страница', page)
   try {
     const { data } = await axios.get('', {
       params: {

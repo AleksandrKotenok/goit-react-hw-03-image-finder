@@ -14,6 +14,5 @@ export const ImageGallery = ({ image }) => {
 };
 
 ImageGallery.propTypes = {
-  options: PropTypes.array,
-  onLeaveFeedback: PropTypes.func,
+  image: PropTypes.array,
 };

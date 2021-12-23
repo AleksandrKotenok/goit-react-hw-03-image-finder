@@ -1,23 +1,17 @@
 import React, { Component } from "react";
-import { toast } from "react-toastify";
 import s from "../Searchbar/Searchbar.module.css";
 
 export default class Searchbar extends Component {
   state = {
     query: "",
   };
-
   searchChange = (event) => {
     this.setState({ query: event.target.value.toLowerCase() });
   };
-
-  handleSubmit = (event) => {
+  submit = (event) => {
     event.preventDefault();
     if (this.state.query.trim() === "") {
-      toast.error("Enter the name of the pictures or photos!");
-      this.setState({
-        query: "",
-      });
+      this.setState({ query: "" });
       return;
     }
     this.props.onSubmit(this.state.query);
@@ -27,7 +21,7 @@ export default class Searchbar extends Component {
   render() {
     return (
       <header className={s.searchbar}>
-        <form className={s.form} onSubmit={this.handleSubmit}>
+        <form className={s.form} onSubmit={this.submit}>
           <button type="submit" className={s.button}>
             <span className={s.label}>Search</span>
           </button>
