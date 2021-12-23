@@ -3,7 +3,6 @@ import PropTypes from "prop-types";
 import s from "../ImageGallery/ImageGallery.module.css";
 
 export const ImageGallery = ({ image }) => {
-  console.log(image);
   return (
     <ul className={s.gallery}>
       {image.map(({ id, webformatURL, largeImageURL }) => (
