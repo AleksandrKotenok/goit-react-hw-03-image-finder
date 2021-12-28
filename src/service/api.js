@@ -14,7 +14,7 @@ const Api = async (search, page) => {
     const { data } = await axios.get('', {
       params: {
         q: search,
-        page: page
+        page
       },
     });
 

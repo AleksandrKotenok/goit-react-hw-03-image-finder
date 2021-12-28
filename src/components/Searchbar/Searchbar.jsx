@@ -5,8 +5,8 @@ export default class Searchbar extends Component {
   state = {
     query: "",
   };
-  searchChange = (event) => {
-    this.setState({ query: event.target.value.toLowerCase() });
+  searchChange = ({ target: { value } }) => {
+    this.setState({ query: value.toLowerCase() });
   };
   submit = (event) => {
     event.preventDefault();

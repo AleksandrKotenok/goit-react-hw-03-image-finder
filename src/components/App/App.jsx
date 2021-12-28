@@ -13,26 +13,26 @@ export default class App extends Component {
     loader: false,
   };
   componentDidUpdate(prevProps, { search, page }) {
+    const apiData = async () => {
+      this.loader();
+      try {
+        const data = await api(this.state.search, this.state.page);
+        this.setState(({ images }) => {
+          return { images: [...images, ...data.hits] };
+        });
+      } catch (event) {
+        console.error(event);
+      } finally {
+        this.loader();
+      }
+    };
     if (search !== this.state.search || page !== this.state.page) {
-      this.apiData();
+      apiData();
     }
     if (this.state.page !== 1) {
       this.scroll();
     }
   }
-  apiData = async () => {
-    this.loader();
-    try {
-      const data = await api(this.state.search, this.state.page);
-      this.setState(({ images }) => {
-        return { images: [...images, ...data.hits] };
-      });
-    } catch (event) {
-      console.error(event);
-    } finally {
-      this.loader();
-    }
-  };
   loader = () => {
     this.setState(({ loader }) => ({ loader: !loader }));
   };
